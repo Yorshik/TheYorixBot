@@ -1,21 +1,24 @@
 from enum import Enum
+
 from color import Color
+
+__all__ = ()
 
 
 class Figure(Enum):
-    none = '.'
-    whiteKing = 'K'
-    whiteQueen = 'Q'
-    whiteRook = 'R'
-    whiteKnight = 'N'
-    whiteBishop = 'B'
-    whitePawn = 'P'
-    blackKing = 'k'
-    blackQueen = 'q'
-    blackRook = 'r'
-    blackKnight = 'n'
-    blackBishop = 'b'
-    blackPawn = 'p'
+    none = "."
+    white_king = "K"
+    white_queen = "Q"
+    white_rook = "R"
+    white_knight = "N"
+    white_bishop = "B"
+    white_pawn = "P"
+    black_king = "k"
+    black_queen = "q"
+    black_rook = "r"
+    black_knight = "n"
+    black_bishop = "b"
+    black_pawn = "p"
 
     def __str__(self):
         return self.value
@@ -24,63 +27,65 @@ class Figure(Enum):
     def get_figure_from_str(cls, move):
         match move:
             case "K":
-                return cls.whiteKing
+                return cls.white_king
             case "Q":
-                return cls.whiteQueen
+                return cls.white_queen
             case "R":
-                return cls.whiteRook
+                return cls.white_rook
             case "B":
-                return cls.whiteBishop
+                return cls.white_bishop
             case "N":
-                return cls.whiteKnight
+                return cls.white_knight
             case "P":
-                return cls.whitePawn
+                return cls.white_pawn
             case "k":
-                return cls.blackKing
+                return cls.black_king
             case "q":
-                return cls.blackQueen
+                return cls.black_queen
             case "r":
-                return cls.blackRook
+                return cls.black_rook
             case "b":
-                return cls.blackBishop
+                return cls.black_bishop
             case "n":
-                return cls.blackKnight
+                return cls.black_knight
             case "p":
-                return cls.blackPawn
-            case _:
-                return cls.none
+                return cls.black_pawn
+        return cls.none
 
     def get_color(self):
         match self:
-            case Figure.whiteKing | \
-                 Figure.whiteQueen | \
-                 Figure.whiteRook | \
-                 Figure.whiteKnight | \
-                 Figure.whiteBishop | \
-                 Figure.whiteKnight | \
-                 Figure.whitePawn:
+            case (
+                Figure.white_king
+                | Figure.white_queen
+                | Figure.white_rook
+                | Figure.white_knight
+                | Figure.white_bishop
+                | Figure.white_knight
+                | Figure.white_pawn
+            ):
                 return Color.white
-            case Figure.blackKing | \
-                 Figure.blackQueen | \
-                 Figure.blackRook | \
-                 Figure.blackKnight | \
-                 Figure.blackBishop | \
-                 Figure.blackKnight | \
-                 Figure.blackPawn:
+            case (
+                Figure.black_king
+                | Figure.black_queen
+                | Figure.black_rook
+                | Figure.black_knight
+                | Figure.black_bishop
+                | Figure.black_knight
+                | Figure.black_pawn
+            ):
                 return Color.black
-            case _:
-                return Color.none
+        return Color.none
 
     def yield_promotions(self, to):
-        if self == Figure.whitePawn and to.y == 7:
-            yield Figure.whiteQueen
-            yield Figure.whiteRook
-            yield Figure.whiteKnight
-            yield Figure.whiteBishop
-        elif self == Figure.blackPawn and to.y == 0:
-            yield Figure.blackQueen
-            yield Figure.blackRook
-            yield Figure.blackKnight
-            yield Figure.blackBishop
+        if self == Figure.white_pawn and to.y == 7:
+            yield Figure.white_queen
+            yield Figure.white_rook
+            yield Figure.white_knight
+            yield Figure.white_bishop
+        elif self == Figure.black_pawn and to.y == 0:
+            yield Figure.black_queen
+            yield Figure.black_rook
+            yield Figure.black_knight
+            yield Figure.black_bishop
         else:
             yield Figure.none

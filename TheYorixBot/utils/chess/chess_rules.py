@@ -1,8 +1,10 @@
 from board import Board
-from moves import Moves
-from figure_moving import FigureMoving
 from figure import Figure
+from figure_moving import FigureMoving
+from moves import Moves
 from square import Square
+
+__all__ = ()
 
 
 class Chess:
@@ -31,18 +33,20 @@ class Chess:
         self.set_check_flags()
         return self
 
-    def Move(self, move):
+    def move(self, move):
         fm = FigureMoving.figure_moving_from_move(move)
         if not self.moves.can_move(fm):
             return self
+
         next_board = self.board.move(fm)
         for i, row in enumerate(next_board.figures):
-            if row[0] == Figure.blackPawn:
-                next_board.figures[i][0] = Figure.blackQueen
-            if row[-1] == Figure.whitePawn:
-                next_board.figures[i][-1] = Figure.whiteQueen
-        next_chess = Chess.chess_from_board(next_board)
-        return next_chess
+            if row[0] == Figure.black_pawn:
+                next_board.figures[i][0] = Figure.black_queen
+
+            if row[-1] == Figure.white_pawn:
+                next_board.figures[i][-1] = Figure.white_queen
+
+        return Chess.chess_from_board(next_board)
 
     def set_check_flags(self):
         self.is_check = self.board.is_check()
@@ -50,6 +54,7 @@ class Chess:
         self.is_stalemate = False
         for _ in self.yield_valid_moves():
             return
+
         if self.is_check:
             self.is_checkmate = True
         else:
@@ -57,8 +62,7 @@ class Chess:
 
     def get_figure_at(self, x, y):
         square = Square.from_x_y(x, y)
-        figure = self.board.get_figure_at(square)
-        return figure
+        return self.board.get_figure_at(square)
 
     def yield_valid_moves(self):
         for fs in self.board.yield_figure_on_squares():

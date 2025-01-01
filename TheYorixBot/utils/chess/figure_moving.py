@@ -1,6 +1,8 @@
 from figure import Figure
 from square import Square
 
+__all__ = ()
+
 
 class FigureMoving:
     none = None
@@ -13,11 +15,11 @@ class FigureMoving:
 
     def __str__(self):
         return (
-                    str(self.figure) +
-                    self.from_square.name +
-                    self.to_square.name +
-                    ("" if self.promotion == Figure.none else str(self.promotion))
-                )
+            str(self.figure)
+            + self.from_square.name
+            + self.to_square.name
+            + ("" if self.promotion == Figure.none else str(self.promotion))
+        )
 
     @property
     def delta_x(self):
@@ -39,16 +41,20 @@ class FigureMoving:
     def sign_x(self):
         if self.delta_x > 0:
             return 1
+
         if self.delta_y < 0:
             return -1
+
         return 0
 
     @property
     def sign_y(self):
         if self.delta_y > 0:
             return 1
+
         if self.delta_y < 0:
             return -1
+
         return 0
 
     @property
@@ -73,6 +79,7 @@ class FigureMoving:
         self.promotion = Figure.none
         if len(move) == 6:
             self.promotion = Figure.get_figure_from_str(move[5])
+
         return self
 
 
